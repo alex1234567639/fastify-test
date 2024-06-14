@@ -9,6 +9,9 @@ interface MyQueryString {
   key01: string
   key02: string
 }
+interface MyBody {
+  age: number
+}
 
 const workspaces: FastifyPluginAsync = async (fastify: FastifyInstance , opts): Promise<void> => {
   fastify.addHook('onReady', (done) => {
@@ -25,6 +28,12 @@ const workspaces: FastifyPluginAsync = async (fastify: FastifyInstance , opts): 
     const { key01, key02 } = request.query;
     return reply.status(200).send({ message: `Hello ${key01} & ${key02}` });
   })
+  // curl -X POST http://localhost:3000/api/hello3/body -H "Content-Type: application/json" -d "{\"age\": 30}"
+  fastify.post<{ Body: MyBody }>('/hello3/body', (request, reply) => {
+    const age = request.body.age;
+    return reply.status(200).send({ message: `Age is ${age}` });
+  })
+
   fastify.get('/public', async (request, reply) => {
       return { message: 'hello3 public' };
   });
