@@ -1,16 +1,6 @@
-import fp from 'fastify-plugin'
+import { FastifyPluginAsync } from 'fastify';
 
-export interface SupportPluginOptions {
-  // Specify Support plugin options here
-}
-
-// The use of fastify-plugin is required to be able
-// to export the decorators to the outer scope
-export default fp<SupportPluginOptions>(async (fastify, opts) => {
-  fastify.decorate('someSupport', function () {
-    return 'hugs'
-  })
-
+const customPlugin: FastifyPluginAsync = async (fastify) => {
   // 向 Fastify 實例添加自定義方法
   fastify.decorate('utility', function() {
     return 'This is a utility function';
@@ -30,11 +20,6 @@ export default fp<SupportPluginOptions>(async (fastify, opts) => {
     this.code(200).send({ status: 'success', data: payload });
     return this;
   });
-})
+};
 
-// When using .decorate you have to specify added properties for Typescript
-declare module 'fastify' {
-  export interface FastifyInstance {
-    someSupport(): string;
-  }
-}
+export default customPlugin;
