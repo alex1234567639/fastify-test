@@ -1,6 +1,6 @@
 import { FastifyPluginAsync } from 'fastify'
 
-const hello: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
+const lifecycle: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
   fastify.get('/life_cycle', async function (request, reply) {
     return { message: 'Hello Lifecycle' }
   })
@@ -41,4 +41,4 @@ const hello: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
   })
 }
 
-export default hello
+export default lifecycle

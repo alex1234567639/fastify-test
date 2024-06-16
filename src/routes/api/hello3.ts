@@ -38,6 +38,8 @@ const workspaces: FastifyPluginAsync = async (fastify: FastifyInstance , opts): 
       return { message: 'hello3 public' };
   });
 
+
+  // curl -X GET http://localhost:3000/api/protected -H "Authorization: secret"
   fastify
   .register(fastifyAuth)
   .after(() => {
